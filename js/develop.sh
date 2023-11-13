@@ -8,6 +8,7 @@ killgroup(){
 }
 
 docker build -t emu-dev-web -f develop/envoy.Dockerfile develop
+docker build -t emu-dev-web-node -f develop/node.Dockerfile
 
 cd "$(dirname "$0")"
 BUILD_OS=$(uname -s)
@@ -25,4 +26,4 @@ esac
 echo "Make sure you are running the android emulator & video bridge"
 echo "Launch the video bridge with 'goldfish-webrtc-bridge --port 9554'"
 
-npm start
+docker run --rm -p 9000:9000 --name -d emu-dev-web-node emu-dev-web-node
